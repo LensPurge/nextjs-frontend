@@ -110,7 +110,7 @@ export function Purge() {
 
   return (
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-tertiary-600 sm:rounded-lg">
-      <div className="flex flex-col px-4 py-3 space-y-3 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-4">
+      <div className="flex flex-col p-4 space-y-3 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-4">
         <div
           className={`flex flex-col flex-shrink-0 space-y-3 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-3 ${
             (purging || purgeSuccess) && "opacity-0"
@@ -157,7 +157,7 @@ export function Purge() {
       <div className="overflow-x-auto h-400 scrollbar-hide">
         {purging && !purgeSuccess && (
           <div className="p-4 h-full w-full grid place-items-center">
-            <div className="w-400">
+            <div className="w-200 sm:w-400">
               <ProgressBar
                 startAnimation={purging}
                 onFinished={handlePurgeSuccess}
@@ -177,7 +177,7 @@ export function Purge() {
           </div>
         )}
       </div>
-      <div className="flex flex-col px-4 py-3 space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 sm:space-x-4">
+      <div className="flex flex-col p-4 space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 sm:space-x-4">
         <div
           className={`w-full sm:w-1/2 ${
             (purging || purgeSuccess) && "opacity-0"
