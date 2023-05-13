@@ -154,7 +154,7 @@ export function Purge() {
           </button>
         </div>
       </div>
-      <div className="overflow-x-auto h-400 scrollbar-hide">
+      <div className="overflow-x-auto h-300 sm:h-400 scrollbar-hide">
         {purging && !purgeSuccess && (
           <div className="p-4 h-full w-full grid place-items-center">
             <div className="w-200 sm:w-400">
