@@ -1,3 +1,4 @@
+import FooterSection from '@/components/footerSection'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
@@ -15,7 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <div className="relative flex flex-col justify-between">
+        <body className="relative z-10">{children}</body>
+        <footer className="z-20">
+          <FooterSection />
+        </footer>
+      </div>
     </html>
   )
 }

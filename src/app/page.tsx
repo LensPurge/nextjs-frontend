@@ -34,7 +34,7 @@ export default function Home() {
         <FeatureSection/>
         <FaqSection/>
         <TeamSection/>
-        <FooterSection/>
+        {/* <FooterSection/> */}
         {/* <div className="flex flex-col items-center justify-center min-h-screen py-2">
           <LoginButton/>
         </div> */}
