@@ -34,7 +34,7 @@ export function PurgeListElement({
             type="checkbox"
             onChange={() => onSelect({ name, lastInteraction, profileId, imageSrc, imageAlt })}
             checked={isSelected}
-            className="w-4 h-4 bg-gray-100 cursor-pointer border-gray-300 rounded accent-primary-500 dark:bg-gray-700 dark:border-gray-600"
+            className="w-3.5 h-3.5 bg-gray-100 cursor-pointer border-gray-300 rounded accent-primary-500 dark:bg-gray-700 dark:border-gray-600"
           />
           <label
             htmlFor={`checkbox-table-search-${profileId}`}
@@ -57,7 +57,7 @@ export function PurgeListElement({
         />
         {name}
       </th>
-      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-cream-500">
+      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-cream-500 text-right">
         {lastInteraction}
       </td>
     </tr>

@@ -21,9 +21,9 @@ export function RangeSlider({ value, onChange, onRelease }: RangeSliderProps) {
     <div className="w-full">
       <label
         htmlFor="steps-range"
-        className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-1 text-sm font-medium text-gray-900 dark:text-cream-500"
       >
-        No Interaction for <b>{value}</b> days
+        No Interaction for <b className="text-primary-500">{value}</b> days
       </label>
       <input
         id="steps-range"
