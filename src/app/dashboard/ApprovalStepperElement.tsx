@@ -1,21 +1,27 @@
 type ApprovalStepperElementProps = {
   profileId: string;
   name: string;
-  done: boolean;
   lastInteraction: string;
+  imageSrc: string;
+  imageAlt: string;
+  done: boolean;
   onApprove: (item: {
     profileId: string;
     name: string;
-    done: boolean;
     lastInteraction: string;
+    imageSrc: string;
+    imageAlt: string;
+    done: boolean;
   }) => void;
 };
 
 export function ApprovalStepperElement({
   profileId,
   name,
-  done,
   lastInteraction,
+  imageSrc,
+  imageAlt,
+  done,
   onApprove,
 }: ApprovalStepperElementProps) {
   return (
@@ -67,7 +73,16 @@ export function ApprovalStepperElement({
           className={`flex ml-9 items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-tertiary-800 dark:text-gray-200 dark:border-gray-200 dark:hover:bg-tertiary-500 dark:hover:border-cream-500 dark:hover:text-cream-500 ${
             done && "opacity-0"
           }`}
-          onClick={() => onApprove({ profileId, name, done, lastInteraction })}
+          onClick={() =>
+            onApprove({
+              profileId,
+              name,
+              lastInteraction,
+              imageSrc,
+              imageAlt,
+              done
+            })
+          }
         >
           Approve
         </button>
