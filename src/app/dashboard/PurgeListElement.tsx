@@ -21,7 +21,7 @@ export function PurgeListElement({
 }: ListElementProps) {
 
   return (
-    <tr className="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+    <tr className="border-b dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-tertiary-700">
       <td className="w-4 px-4 py-3">
         <div className="flex items-center">
           <input
@@ -29,7 +29,7 @@ export function PurgeListElement({
             type="checkbox"
             onChange={() => onSelect({ name, lastInteraction, profileId })}
             checked={isSelected}
-            className="w-4 h-4 bg-gray-100 cursor-pointer border-gray-300 rounded text-primary-600 dark:bg-gray-700 dark:border-gray-600"
+            className="w-4 h-4 bg-gray-100 cursor-pointer border-gray-300 rounded accent-primary-500 dark:bg-gray-700 dark:border-gray-600"
           />
           <label
             htmlFor={`checkbox-table-search-${profileId}`}
@@ -46,11 +46,11 @@ export function PurgeListElement({
         <img
           src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
           alt="iMac Front Image"
-          className="w-auto h-8 mr-3"
+          className="w-auto h-8 mr-3 text-cream-500"
         />
         {name}
       </th>
-      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-cream-500">
         {lastInteraction}
       </td>
     </tr>
