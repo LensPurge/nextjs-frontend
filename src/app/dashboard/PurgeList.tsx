@@ -80,6 +80,8 @@ export function PurgeList({ listItems, onSelectionChange }: PurgeXProps) {
             name={item.name}
             lastInteraction={item.lastInteraction}
             profileId={item.profileId}
+            imageSrc={item.imageSrc}
+            imageAlt={item.imageAlt}
             onSelect={handleItemSelect}
             isSelected={selectedItems.some(
               (selected) => selected.profileId === item.profileId

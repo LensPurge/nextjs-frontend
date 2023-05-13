@@ -4,10 +4,14 @@ type ListElementProps = {
   name: string;
   lastInteraction: string;
   profileId: string;
+  imageSrc: string;
+  imageAlt: string;
   onSelect: (item: {
     name: string;
     lastInteraction: string;
     profileId: string;
+    imageSrc: string;
+    imageAlt: string;
   }) => void;
   isSelected: boolean;
 };
@@ -16,10 +20,11 @@ export function PurgeListElement({
   name,
   lastInteraction,
   profileId,
+  imageSrc,
+  imageAlt,
   onSelect,
   isSelected,
 }: ListElementProps) {
-
   return (
     <tr className="border-b dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-tertiary-700">
       <td className="w-4 px-4 py-3">
@@ -27,7 +32,7 @@ export function PurgeListElement({
           <input
             id={`checkbox-table-search-${profileId}`}
             type="checkbox"
-            onChange={() => onSelect({ name, lastInteraction, profileId })}
+            onChange={() => onSelect({ name, lastInteraction, profileId, imageSrc, imageAlt })}
             checked={isSelected}
             className="w-4 h-4 bg-gray-100 cursor-pointer border-gray-300 rounded accent-primary-500 dark:bg-gray-700 dark:border-gray-600"
           />
@@ -43,10 +48,12 @@ export function PurgeListElement({
         scope="row"
         className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
       >
-        <img
-          src="https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png"
-          alt="iMac Front Image"
+        <Image
+          src={imageSrc}
+          alt={imageAlt}
           className="w-auto h-8 mr-3 text-cream-500"
+          width={100}
+          height={100}
         />
         {name}
       </th>
