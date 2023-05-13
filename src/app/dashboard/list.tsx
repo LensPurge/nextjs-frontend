@@ -50,6 +50,11 @@ export function List() {
     }
   }
 
+  function purge(items: ListItem[]) {
+    console.log("purge");
+    console.log(items);
+  }
+
   return (
     <div className="px-4 py-4 mx-auto lg:px-12 w-3/4 xl:w-1/2">
       <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
@@ -61,6 +66,7 @@ export function List() {
             <button
               type="button"
               className="flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+              onClick={() => purge(selectedItems)}
             >
               <svg
                 className="h-3.5 w-3.5 mr-2"
@@ -80,6 +86,7 @@ export function List() {
             <button
               type="button"
               className="flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              onClick={() => purge(listItems)}
             >
               <svg
                 className="w-4 h-4 mr-2"
@@ -109,7 +116,7 @@ export function List() {
                     <input
                       id="checkbox-all"
                       type="checkbox"
-                      className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      className="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600 dark:bg-gray-700 dark:border-gray-600"
                       onChange={handleSelectAllChange}
                       checked={allChecked}
                     />
@@ -150,12 +157,6 @@ export function List() {
             Cancel
           </button>
         </div>
-        <h2>Selected Items:</h2>
-        <ul>
-          {selectedItems.map((item) => (
-            <li key={item.profileId}>{item.profileId}</li>
-          ))}
-        </ul>
       </div>
     </div>
   );

@@ -30,7 +30,7 @@ export function ListElement({
             type="checkbox"
             onChange={() => onSelect({ name, lastInteraction, profileId })}
             checked={isSelected}
-            className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            className="w-4 h-4 bg-gray-100 cursor-pointer border-gray-300 rounded text-primary-600 dark:bg-gray-700 dark:border-gray-600"
           />
           <label
             htmlFor={`checkbox-table-search-${profileId}`}
