@@ -1,8 +1,10 @@
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { authenticate, apolloClient, getChallenge } from "./api";
+import { authenticate, apolloClient, getChallenge, unfollowUser } from "./api";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import { useAccounts } from "@/components/accountContext";
+import { setContext } from '@apollo/client/link/context';
+import { getClient } from "./client";
 
 export function LoginButton() {
   const { account, setAccount } = useAccounts();
@@ -69,11 +71,24 @@ export function LoginButton() {
       });
   }
 
+  async function unfollow() {
+    const newClient = await getClient();
+    await newClient.mutate({
+      mutation: unfollowUser,
+      variables: {
+        profile: "0x15",
+      },
+    }).then((result) => console.log(result));
+  }
+
   return (
     <div>
       <button onClick={connectWallet}>Log in</button>
       <div>
         <button onClick={authenticateAPI}>Authentication</button>
+        <div>
+          <button onClick={unfollow}>Unfollow</button>
+        </div>
       </div>
     </div>
   );

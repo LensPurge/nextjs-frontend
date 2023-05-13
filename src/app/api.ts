@@ -1,12 +1,27 @@
 // we need to create a client in order to receive API data from gql;
-import { ApolloClient, InMemoryCache, HttpLink, gql } from '@apollo/client';
+import { ApolloClient, InMemoryCache, createHttpLink, gql } from '@apollo/client';
+import { setContext } from '@apollo/link-context';
 import fetch from 'cross-fetch';
 
 const APIURL = "https://api-mumbai.lens.dev"
 
+const httpLink = createHttpLink({
+	uri: APIURL, // replace with your API endpoint
+	fetch,
+  });
+
+  export const authLink = setContext(() => {
+	const token = localStorage.getItem('accessToken');
+	return {
+	  headers: {
+		'x-access-token': token ? `Bearer ${token}` : '',
+	  }
+	}
+  });
+
 // create the client using the URL;
 export const apolloClient = new ApolloClient({
-    link: new HttpLink({ uri: APIURL, fetch }),
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
   });
 
@@ -147,3 +162,54 @@ query Publications {
       refreshToken
     }
   }`
+
+export const unfollowUser = gql`
+mutation CreateUnfollowTypedData(
+	  $profile: ProfileId!) {
+  createUnfollowTypedData(request:{
+    profile: $profile
+  }) {
+    id
+    expiresAt
+    typedData {
+      types {
+        BurnWithSig {
+          name
+          type
+        }
+      }
+      domain {
+        version
+        chainId
+        name
+        verifyingContract
+      }
+      value {
+        nonce
+        deadline
+        tokenId
+      }
+    }
+  }
+}`
+
+export const getFollowers = gql`
+query Following {
+  following(request: { 
+                address: "0x4CDFb2034050A61D8807bAa9e9F11d2dfc2682d6",
+              limit: 10
+             }) {
+    items {
+      profile {
+        id
+        name
+      }
+      totalAmountOfTimesFollowing
+    }
+    pageInfo {
+      prev
+      next
+      totalCount
+    }
+  }
+}`
