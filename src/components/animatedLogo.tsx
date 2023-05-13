@@ -12,6 +12,7 @@ import { Canvas, useFrame, MeshProps, useThree } from '@react-three/fiber';
 useGLTF.preload("/logo.gltf");
 
 function Logo(props: MeshProps) {
+	// @ts-ignore
 	const { nodes } = useGLTF("/logo.gltf");
 	const ref = useRef<Group>();
 

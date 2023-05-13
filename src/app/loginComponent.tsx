@@ -1,47 +1,44 @@
 "use client";
 import { ethers } from "ethers";
-import Web3Modal from "web3modal";
-import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
-import { useAccounts } from "@/components/accountContext";
+import { toast } from 'react-toastify';
+import { useCallback, useEffect, useState } from "react";
+import { useAccounts } from "@/components/web3Context";
 import { authenticate, apolloClient, getChallenge } from "./api";
-import { useCallback, useEffect } from "react";
+import { LinkIcon, ArrowLeftOnRectangleIcon } from '@heroicons/react/24/solid';
+import { useLensAccounts } from "@/components/lensACCOUNTContext";
 
-const providerOptions = {
-  coinbasewallet: {
-      package: CoinbaseWalletSDK,
-      options: {
-          appName: "minimalens",
-          infuraId: {80001: "https://rpc-mumbai.maticvigil.com"}
-      }
-  }
-};
-const web3Modal = new Web3Modal({
-  cacheProvider: true,
-  providerOptions,
-});
+/* -------------------------------------------------------------------------- */
+/*                                 Components                                 */
+/* -------------------------------------------------------------------------- */
 
 export function LoginButton() {
-  const { account, setAccount } = useAccounts();
+  const [ onRender, setOnRender ] = useState(true);
+  const { account, setAccount, disconnectAccount, web3Modal } = useAccounts();
+  const { account: lensAccount, setLensAccount, disconnectLens } = useLensAccounts();
 
   const connectWallet = useCallback(async () => {
     try {
-      console.log(!web3Modal.cachedProvider);
+      if (web3Modal == undefined) return;
       const web3ModalInstance = await web3Modal.connect();
-      const web3ModalProvider = new ethers.providers.Web3Provider(
-        web3ModalInstance
-      );
-      let account = web3ModalProvider.getSigner();
+      const web3ModalProvider = new ethers.providers.Web3Provider(web3ModalInstance);
+      const account = await web3ModalProvider.getSigner();
       setAccount(account);
     } catch (error) {
-      console.log("error while connecting with wallet: ", error);
+      if (error == "Modal closed by user") return;
+      toast("" + error, {
+        type: "error"
+      });
+      return;
     }
-  }, [setAccount]);
+  }, [setAccount, web3Modal]);
 
-  async function authenticateAPI() {
-    connectWallet();
-    const signerAddress = await account.getAddress()
-
-    let response = await apolloClient.query({
+  async function getTokens() {
+    if (typeof localStorage !== "undefined") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    }
+    const signerAddress = await account.getAddress();
+    const response = await apolloClient.query({
       query: getChallenge,
       variables: {
         address: signerAddress,
@@ -49,47 +46,36 @@ export function LoginButton() {
     });
     const challengeText: string = response.data.challenge.text;
     const signature: string = await account.signMessage(challengeText);
-    await apolloClient
-      .mutate({
-        mutation: authenticate,
-        variables: {
-          signature: signature,
-          address: signerAddress,
-        },
-      })
-      .then((result) => {
-        if (typeof localStorage !== "undefined") {
-          localStorage.setItem(
-            "accessToken",
-            result.data.authenticate.accessToken
-          ),
-            localStorage.setItem(
-              "refreshToken",
-              result.data.authenticate.refreshToken
-            );
-        } else {
-          console.log("localStorage is not defined");
-        }
-      });
+    await apolloClient.mutate({
+      mutation: authenticate,
+      variables: {
+        signature: signature,
+        address: signerAddress,
+      }
+    }).then((result) => {
+      setLensAccount({accessToken: result.data.authenticate.accessToken, refreshToken: result.data.authenticate.refreshToken})
+    });
   }
 
   useEffect(() => {
-    if (web3Modal.cachedProvider) {
+    if (web3Modal != undefined && web3Modal.cachedProvider && onRender) {
+      setOnRender(false);
       connectWallet();
     }
-  }, [connectWallet]);
+  }, [connectWallet, web3Modal, onRender, setOnRender]);
 
+  if (account != undefined) {
+    return (
+      <button onClick={disconnectAccount} type="button" className={(web3Modal != undefined && web3Modal.cachedProvider == "") ? "opacity-0 " : "" + "sm:inline-flex items-center justify-center py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-red-600 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}>
+        <ArrowLeftOnRectangleIcon className="mr-1 -ml-1 w-5 h-5"/>
+        Disconnect Wallet
+      </button>
+    )
+  }
   return (
-    <>
-    <button onClick={connectWallet} type="button" className="hidden sm:inline-flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-xs px-4 py-2 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-      <svg aria-hidden="true" className="mr-1 -ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-        <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"/>
-      </svg>
+    <button onClick={connectWallet} type="button" className={(web3Modal != undefined && web3Modal.cachedProvider != "") ? "opacity-0 " : "" + "sm:inline-flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"}>
+      <LinkIcon className="mr-1 -ml-1 w-5 h-5"/>
       Connect Wallet
     </button>
-    <div>
-      <button onClick={authenticateAPI}>Authentication</button>
-    </div>
-    </>
-  );
+  )
 }
