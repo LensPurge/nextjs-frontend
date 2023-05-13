@@ -1,12 +1,13 @@
 "use client";
 
-import { List } from "./list";
 import { Header } from "./header";
+import { Purge } from "./Purge";
+
 export default function Dashboard() {
   return (
     <div>
       <Header />
-      <List />
+      <Purge />
     </div>
   );
 }

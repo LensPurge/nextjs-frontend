@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { useState } from "react";
 
 type ListElementProps = {
   name: string;
@@ -13,7 +12,7 @@ type ListElementProps = {
   isSelected: boolean;
 };
 
-export function ListElement({
+export function PurgeListElement({
   name,
   lastInteraction,
   profileId,
