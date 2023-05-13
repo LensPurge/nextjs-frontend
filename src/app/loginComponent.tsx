@@ -1,23 +1,16 @@
-"use client";
-import { providers } from 'ethers'
 import { useWalletLogin } from '@lens-protocol/react-web';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
-
-interface Window {
-  ethereum: any
-}
+import { mainnet, optimism } from 'wagmi/chains';
 
 export function LoginButton() {
   const { execute: login, error: loginError, isPending: isLoginPending } = useWalletLogin();
-
-  const provider = new providers.Web3Provider((window as unknown as Window).ethereum);
 
   const { isConnected } = useAccount();
   const { disconnectAsync } = useDisconnect();
 
   const { connectAsync } = useConnect({
-    connector: new InjectedConnector(),
+    connector: new InjectedConnector()
   });
 
   const onLoginClick = async () => {
@@ -28,10 +21,10 @@ export function LoginButton() {
     const { connector } = await connectAsync();
 
     if (connector instanceof InjectedConnector) {
-      const walletClient = await connector.getWalletClient();
-      const [address] = await walletClient.getAddresses();
-      const signer = provider.getSigner(address)
+      const signer = await connector.getSigner();
       await login(signer);
+
+	  console.log("signer: ", signer);
     }
   };
  
