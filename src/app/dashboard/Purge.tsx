@@ -6,6 +6,7 @@ import Image from "next/image";
 import { PurgeSuccess } from "./PurgeSuccess";
 import { RangeSlider } from "./RangeSlider";
 import "./list.css";
+import { ApprovalStepper } from "./ApprovalStepper";
 
 export function Purge() {
   const listItems: ListItem[] = [
@@ -102,8 +103,13 @@ export function Purge() {
     setPurging(true);
   }
 
-  function handlePurgeSuccess(done: boolean) {
-    console.log("handlePurgeSuccess");
+  // function handlePurgeSuccess(done: boolean) {
+  //   console.log("handlePurgeSuccess");
+  //   setPurgeSuccess(done);
+  //   setPurging(false);
+  // }
+
+  function handleAllApproved(done: boolean) {
     setPurgeSuccess(done);
     setPurging(false);
   }
@@ -155,16 +161,19 @@ export function Purge() {
         </div>
       </div>
       <div className="overflow-x-auto h-300 sm:h-400 scrollbar-hide">
+        {/* {purging && !purgeSuccess && ( */}
         {purging && !purgeSuccess && (
-          <div className="p-4 h-full w-full grid place-items-center">
-            <div className="w-200 sm:w-400">
-              <ProgressBar
-                startAnimation={purging}
-                onFinished={handlePurgeSuccess}
-              />
-            </div>
+          <div className="p-4 h-full w-full grid place-items-center overflow-y-scroll">
+            <ApprovalStepper onAllApproved={handleAllApproved} />
           </div>
+          //   <div className="w-200 sm:w-400">
+          //     <ProgressBar
+          //       startAnimation={purging}
+          //       onFinished={handlePurgeSuccess}
+          //     />
+          // </div>
         )}
+        {/* {!purging && !purgeSuccess && ( */}
         {!purging && !purgeSuccess && (
           <PurgeList
             listItems={listItems}
