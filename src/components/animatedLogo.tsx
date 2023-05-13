@@ -1,9 +1,13 @@
 "use client";
+import { Group } from 'three';
+import React, { useRef, Ref } from 'react';
+import { useGLTF } from "@react-three/drei";
 import { OrbitControls } from '@react-three/drei';
-import React, { useRef, useState, Ref } from 'react';
-import { BufferGeometry, Material, Mesh, Group, PerspectiveCamera as PSC } from 'three';
 import { Canvas, useFrame, MeshProps, useThree } from '@react-three/fiber';
-import { useGLTF, PerspectiveCamera } from "@react-three/drei";
+
+/* -------------------------------------------------------------------------- */
+/*                                 Components                                 */
+/* -------------------------------------------------------------------------- */
 
 useGLTF.preload("/logo.gltf");
 
