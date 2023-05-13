@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 
 type ProgressBarProps = {
   startAnimation: boolean;
@@ -11,9 +12,20 @@ export function ProgressBar({ startAnimation }: ProgressBarProps) {
     setPercentage(100);
   }
 
+  function handleConfetti() {
+    confetti({
+      particleCount: 80,
+      spread: 20,
+      origin: { y: 0.6 },
+    });
+  }
+
   useEffect(() => {
     if (startAnimation) {
       animateProgressBar();
+      setTimeout(() => {
+        handleConfetti();
+      }, 2000);
     }
   }, [startAnimation]);
 
