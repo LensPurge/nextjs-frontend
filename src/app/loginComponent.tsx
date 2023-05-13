@@ -1,10 +1,13 @@
-import { ethers } from "ethers";
 import Web3Modal from "web3modal";
-import { authenticate, apolloClient, getChallenge, unfollowUser } from "./api";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
+import { ethers, utils } from "ethers";
+import { authenticate, apolloClient, getChallenge,
+         unfollowUser, getUnfollowTypedData } from "./api";
 import { useAccounts } from "@/components/accountContext";
-import { setContext } from '@apollo/client/link/context';
 import { getClient } from "./client";
+import { LENS_FOLLOW_NFT_ABI } from "./abi";
+import { omit } from "./helper";
+import { TypedDataDomain } from '@ethersproject/abstract-signer';
 
 export function LoginButton() {
   const { account, setAccount } = useAccounts();
@@ -17,6 +20,18 @@ export function LoginButton() {
             infuraId: {80001: "https://rpc-mumbai.maticvigil.com"}
         }
     }
+  };
+
+   async function signedTypeData(
+    domain: TypedDataDomain,
+    types: Record<string, any>,
+    value: Record<string, any>
+  ) {
+    return account._signTypedData(
+      omit(domain, '__typename'),
+      omit(types, '__typename'),
+      omit(value, '__typename')
+    );
   };
 
   async function connectWallet() {
@@ -71,14 +86,45 @@ export function LoginButton() {
       });
   }
 
+  async function createUnfollowTypedData (profileId:string) {
+    const result = await apolloClient.mutate({
+        mutation: getUnfollowTypedData,
+        variables: {
+            profile: profileId
+        }
+    })
+    return result.data!.createUnfollowTypedData
+  }
+
   async function unfollow() {
+    // @note this also needs to be variable, bc this is the followed NFT address
+    const followNftAddress = "0x519B98aCFe0d13161aE75E6aEA8C4C60f6418055"
+    const followNftContract = new ethers.Contract(
+        followNftAddress,
+        LENS_FOLLOW_NFT_ABI,
+        account
+    )
+    let profileId = "0x15" // @note this needs to be variable
+    const result = await createUnfollowTypedData(profileId)
+    const typedData = result.typedData
+    const signature = await signedTypeData(typedData.domain, typedData.types, typedData.value)
+    const { v, r, s } = utils.splitSignature(signature)
+    const sig = {
+        v,
+        r,
+        s,
+        deadline: typedData.value.deadline
+    }
+    const tx = await followNftContract.burnWithSig(typedData.value.tokenId, sig)
+    console.log("follow: tx hash", tx.hash)
     const newClient = await getClient();
     await newClient.mutate({
       mutation: unfollowUser,
       variables: {
         profile: "0x15",
       },
-    }).then((result) => console.log(result));
+    }).then(() =>
+    console.log("successfully unfollowed"));
   }
 
   return (

@@ -31,6 +31,7 @@
     "fs": "^0.0.1-security",
     "net": "^1.0.2",
     "next": "13.4.2",
+    "omit-deep": "^0.3.0",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-dom": "18.2.0",
