@@ -25,6 +25,9 @@ export default function ContentSection() {
 						className="mt-4 w-full lg:mt-10 rounded-lg"
 					/>
 				</div>
+                <button>
+                    
+                </button>
 			</div>
 		</section>
 	)

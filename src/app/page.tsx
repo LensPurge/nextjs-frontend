@@ -12,7 +12,10 @@ import FooterSection from '../components/footerSection';
 import FeatureSection from '../components/featureSection';
 import ContentSection from '../components/contentSection';
 import FaqSection from '@/components/faqSection';
+import { LoginButton } from './loginComponent';
+import ContextProvider from '@/components/accountContext';
 const { provider, webSocketProvider } = configureChains([polygon, polygonMumbai], [publicProvider()]);
+
 
 const client = createClient({
   autoConnect: true,
@@ -28,17 +31,19 @@ const lensConfig: LensConfig = {
 export default function Home() {
   return (
     <WagmiConfig client={client}>
-      <LensProvider config={lensConfig}>
-        <HeroSection/>
-        <ContentSection/>
-        <FeatureSection/>
-        <FaqSection/>
-        <TeamSection/>
-        <FooterSection/>
-        {/* <div className="flex flex-col items-center justify-center min-h-screen py-2">
-          <LoginButton/>
-        </div> */}
-      </LensProvider>
+      <ContextProvider>
+        <LensProvider config={lensConfig}>
+            <HeroSection/>
+            <ContentSection/>
+            <FeatureSection/>
+            <FaqSection/>
+            <TeamSection/>
+            <FooterSection/>
+            <div className="flex flex-col items-center justify-center min-h-screen py-2">
+            <LoginButton/>
+            </div>
+        </LensProvider>
+      </ContextProvider>
     </WagmiConfig>
   )
 }
