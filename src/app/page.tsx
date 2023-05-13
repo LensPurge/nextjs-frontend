@@ -7,6 +7,11 @@ import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public'
 import { LoginButton } from './loginComponent';
+import HeroSection from './heroSection';
+import TeamSection from './teamSection';
+import FooterSection from './footerSection';
+import FeatureSection from './featureSection';
+import ContentSection from './contentSection';
 const { provider, webSocketProvider } = configureChains([polygon, mainnet], [publicProvider()]);
 
 const client = createClient({
@@ -24,9 +29,14 @@ export default function Home() {
   return (
     <WagmiConfig client={client}>
       <LensProvider config={lensConfig}>
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <HeroSection/>
+        <ContentSection/>
+        <FeatureSection/>
+        <TeamSection/>
+        <FooterSection/>
+        {/* <div className="flex flex-col items-center justify-center min-h-screen py-2">
           <LoginButton/>
-        </div>
+        </div> */}
       </LensProvider>
     </WagmiConfig>
   )
