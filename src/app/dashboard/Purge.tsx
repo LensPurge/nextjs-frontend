@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ListItem } from "./types";
 import Image from "next/image";
 import { PurgeSuccess } from "./PurgeSuccess";
+import { RangeSlider } from "./RangeSlider";
 import "./list.css";
 
 export function Purge() {
@@ -78,6 +79,17 @@ export function Purge() {
 
   const [purging, setPurging] = useState(false);
   const [purgeSuccess, setPurgeSuccess] = useState(false);
+
+  const [sliderValue, setSliderValue] = useState(2.5);
+
+  const handleSliderChange = (sliderValue: number) => {
+    setSliderValue(sliderValue);
+  };
+
+  const handleSliderRelease = (sliderValue: number) => {
+    console.log(sliderValue);
+    // fetch users here
+  };
 
   function handleSelectedItems(items: ListItem[]) {
     console.log("selectedItems: ", items);
@@ -165,7 +177,19 @@ export function Purge() {
           </div>
         )}
       </div>
-      <div className="flex flex-col px-4 py-3 space-y-3 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-4">
+      <div className="flex flex-col px-4 py-3 space-y-3 sm:flex-row sm:items-center sm:justify-between sm:space-y-0 sm:space-x-4">
+        <div
+          className={`w-full sm:w-1/2 ${
+            (purging || purgeSuccess) && "opacity-0"
+          }`}
+        >
+          <RangeSlider
+            value={sliderValue}
+            onChange={handleSliderChange}
+            onRelease={handleSliderRelease}
+          />
+        </div>
+
         <button
           type="button"
           className={`flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-tertiary-800 dark:text-gray-200 dark:border-gray-200 dark:hover:bg-tertiary-500 dark:hover:border-cream-500 dark:hover:text-cream-500 ${
