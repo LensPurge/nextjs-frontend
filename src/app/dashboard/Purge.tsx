@@ -8,8 +8,11 @@ import { PurgeSuccess } from "./PurgeSuccess";
 import { RangeSlider } from "./RangeSlider";
 import "./list.css";
 import { ApprovalStepper } from "./ApprovalStepper";
+import { useAccounts } from "@/components/web3Context";
 
 export function Purge() {
+  const { provider } = useAccounts();
+
   useEffect(() => {
     fetchItems();
   }, []);
@@ -37,13 +40,14 @@ export function Purge() {
   }
 
   async function fetchItems() {
+    const address = await provider?.getSigner().getAddress();
     console.log("makeRequest");
     const response = await fetch(
       "https://pbbecker.pythonanywhere.com/minimalens",
       {
         method: "POST",
         body: JSON.stringify({
-          profile_id: "0x15",
+          profile_id: address,
         }),
         headers: {
           "Access-Control-Allow-Origin": "*",
