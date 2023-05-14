@@ -4,21 +4,6 @@ import { NextPage } from "next";
 import Web3Modal from "web3modal";
 import React, { useState } from "react";
 import { createContext, useContext } from "react";
-import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
-
-/* -------------------------------------------------------------------------- */
-/*                                  Settings                                  */
-/* -------------------------------------------------------------------------- */
-
-const providerOptions = {
-  coinbasewallet: {
-      package: CoinbaseWalletSDK,
-      options: {
-          appName: "minimalens",
-          infuraId: {80001: "https://rpc-mumbai.maticvigil.com"}
-      }
-  }
-};
 
 /* -------------------------------------------------------------------------- */
 /*                                 Interfaces                                 */
@@ -46,8 +31,7 @@ const ContextProvider: NextPage<Props> = ({ children }) => {
   var web3Modal: Web3Modal | undefined = undefined;
   if (typeof window !== "undefined") {
     web3Modal = new Web3Modal({
-      cacheProvider: true,
-      providerOptions,
+      cacheProvider: true
     });
   }
 

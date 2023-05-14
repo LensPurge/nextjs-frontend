@@ -12,7 +12,7 @@ export default function NavComponent() {
 				<Image
 					src="/logo.svg"
 					alt={"Logo"}
-					className="mr-3 h-12"
+					className="h-10 md:h-12 lg:h-14"
 					width={100}
 					height={100}
 				/>
