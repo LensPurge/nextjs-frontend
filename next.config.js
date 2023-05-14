@@ -4,7 +4,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "flowbite.s3.amazonaws.com",
+        hostname: "ipfs.io",
         port: "",
         pathname: "/*/**",
       },

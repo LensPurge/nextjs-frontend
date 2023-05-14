@@ -17,6 +17,10 @@ export function Purge() {
     fetchItems();
   }, []);
 
+  function randomNumber() {
+    return Math.floor(Math.random() * 3) + 1;
+  }
+
   function convertItems(items: any): ListItem[] {
     let arry: ListItem[] = [];
     for (const [k, v] of Object.entries(items)) {
@@ -25,15 +29,18 @@ export function Purge() {
       let name = v.handle;
       // @ts-ignore
       let nft_addr = v.nft_addr;
+      // @ts-ignore
+      let img_link = v.img_link;
+
+      let month = randomNumber();
 
       arry.push({
         profileId: profileId,
         name: name,
         nftAddr: nft_addr,
-        imageSrc:
-          "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
+        imageSrc: img_link,
         imageAlt: "Profile Pic",
-        lastInteraction: "01.04.2023",
+        lastInteraction: `${month} ${month === 1 ? "month" : "months"} ago`,
       });
     }
     return arry;
