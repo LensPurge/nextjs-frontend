@@ -82,6 +82,7 @@ export function PurgeList({ listItems, onSelectionChange }: PurgeXProps) {
             profileId={item.profileId}
             imageSrc={item.imageSrc}
             imageAlt={item.imageAlt}
+            nftAddr={item.nftAddr}
             onSelect={handleItemSelect}
             isSelected={selectedItems.some(
               (selected) => selected.profileId === item.profileId

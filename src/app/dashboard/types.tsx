@@ -4,4 +4,5 @@ export type ListItem = {
   profileId: string;
   imageSrc: string;
   imageAlt: string;
+  nftAddr: string;
 };

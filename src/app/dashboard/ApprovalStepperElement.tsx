@@ -4,6 +4,7 @@ type ApprovalStepperElementProps = {
   lastInteraction: string;
   imageSrc: string;
   imageAlt: string;
+  nftAddr: string;
   done: boolean;
   onApprove: (item: {
     profileId: string;
@@ -11,6 +12,7 @@ type ApprovalStepperElementProps = {
     lastInteraction: string;
     imageSrc: string;
     imageAlt: string;
+    nftAddr: string;
     done: boolean;
   }) => void;
 };
@@ -22,6 +24,7 @@ export function ApprovalStepperElement({
   imageSrc,
   imageAlt,
   done,
+  nftAddr,
   onApprove,
 }: ApprovalStepperElementProps) {
   return (
@@ -70,7 +73,7 @@ export function ApprovalStepperElement({
         </div>
         <button
           type="button"
-          className={`flex ml-9 items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-tertiary-800 dark:text-gray-200 dark:border-gray-200 dark:hover:bg-tertiary-500 dark:hover:border-cream-500 dark:hover:text-cream-500 ${
+          className={`flex ml-auto items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-tertiary-800 dark:text-gray-200 dark:border-gray-200 dark:hover:bg-tertiary-500 dark:hover:border-cream-500 dark:hover:text-cream-500 ${
             done && "opacity-0"
           }`}
           onClick={() =>
@@ -80,7 +83,8 @@ export function ApprovalStepperElement({
               lastInteraction,
               imageSrc,
               imageAlt,
-              done
+              done,
+              nftAddr,
             })
           }
         >

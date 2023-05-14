@@ -6,12 +6,14 @@ type ListElementProps = {
   profileId: string;
   imageSrc: string;
   imageAlt: string;
+  nftAddr: string;
   onSelect: (item: {
     name: string;
     lastInteraction: string;
     profileId: string;
     imageSrc: string;
     imageAlt: string;
+    nftAddr: string;
   }) => void;
   isSelected: boolean;
 };
@@ -24,6 +26,7 @@ export function PurgeListElement({
   imageAlt,
   onSelect,
   isSelected,
+  nftAddr,
 }: ListElementProps) {
   return (
     <tr className="border-b dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-tertiary-700">
@@ -32,7 +35,7 @@ export function PurgeListElement({
           <input
             id={`checkbox-table-search-${profileId}`}
             type="checkbox"
-            onChange={() => onSelect({ name, lastInteraction, profileId, imageSrc, imageAlt })}
+            onChange={() => onSelect({ name, lastInteraction, profileId, imageSrc, imageAlt, nftAddr })}
             checked={isSelected}
             className="w-3.5 h-3.5 bg-gray-100 cursor-pointer border-gray-300 rounded accent-primary-500 dark:bg-gray-700 dark:border-gray-600"
           />

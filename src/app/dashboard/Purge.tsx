@@ -1,7 +1,7 @@
 "use client";
 import { ProgressBar } from "./ProgressBar";
 import { PurgeList } from "./PurgeList";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { ListItem } from "./types";
 import Image from "next/image";
 import { PurgeSuccess } from "./PurgeSuccess";
@@ -10,72 +10,63 @@ import "./list.css";
 import { ApprovalStepper } from "./ApprovalStepper";
 
 export function Purge() {
-  const listItems: ListItem[] = [
-    {
-      profileId: "0x1a",
-      name: "Fio",
-      lastInteraction: "01.04.2023",
-      imageSrc:
-        "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
-      imageAlt: "Profile Pic",
-    },
-    {
-      profileId: "0x1b",
-      name: "Paul",
-      lastInteraction: "01.04.2023",
-      imageSrc:
-        "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
-      imageAlt: "Profile Pic",
-    },
-    {
-      profileId: "0x1c",
-      name: "Pauldev",
-      lastInteraction: "01.04.2023",
-      imageSrc:
-        "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
-      imageAlt: "Profile Pic",
-    },
-    {
-      profileId: "0x1d",
-      name: "Luka",
-      lastInteraction: "01.04.2023",
-      imageSrc:
-        "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
-      imageAlt: "Profile Pic",
-    },
-    {
-      profileId: "0x1e",
-      name: "Alex",
-      lastInteraction: "01.04.2023",
-      imageSrc:
-        "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
-      imageAlt: "Profile Pic",
-    },
-    {
-      profileId: "0x1f",
-      name: "Dude",
-      lastInteraction: "01.04.2023",
-      imageSrc:
-        "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
-      imageAlt: "Profile Pic",
-    },
-    {
-      profileId: "0x1g",
-      name: "Sir",
-      lastInteraction: "01.04.2023",
-      imageSrc:
-        "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
-      imageAlt: "Profile Pic",
-    },
-    {
-      profileId: "0x1h",
-      name: "Lens",
-      lastInteraction: "01.04.2023",
-      imageSrc:
-        "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
-      imageAlt: "Profile Pic",
-    },
-  ];
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  function convertItems(items: any): ListItem[] {
+    let arry: ListItem[] = [];
+    for (const [k, v] of Object.entries(items)) {
+      let profileId = k;
+      // @ts-ignore
+      let name = v.handle;
+      // @ts-ignore
+      let nft_addr = v.nft_addr;
+
+      arry.push({
+        profileId: profileId,
+        name: name,
+        nftAddr: nft_addr,
+        imageSrc:
+          "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
+        imageAlt: "Profile Pic",
+        lastInteraction: "01.04.2023",
+      });
+    }
+    return arry;
+  }
+
+  async function fetchItems() {
+    console.log("makeRequest");
+    const response = await fetch(
+      "https://pbbecker.pythonanywhere.com/minimalens",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          profile_id: "0x15",
+        }),
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    const items = await response.json();
+    console.log({ items });
+    console.log(typeof items);
+    const converted = convertItems(items);
+    setListItems(converted);
+  }
+
+  const [listItems, setListItems] = useState<ListItem[]>([]);
+  // const listItems: ListItem[] = [
+  //   {
+  //     profileId: "0x1a",
+  //     name: "Fio",
+  //     lastInteraction: "01.04.2023",
+  //     imageSrc:
+  //       "https://flowbite.s3.amazonaws.com/blocks/application-ui/products/imac-front-image.png",
+  //     imageAlt: "Profile Pic",
+  //   },
 
   const [itemsToPurge, setItemsToPurge] = useState<ListItem[]>([]);
 
