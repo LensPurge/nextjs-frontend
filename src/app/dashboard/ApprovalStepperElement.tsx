@@ -30,7 +30,7 @@ export function ApprovalStepperElement({
   return (
     <div className="w-full">
       {done && (
-        <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-primary-500">
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-lightGreen-500">
           <svg
             aria-hidden="true"
             className="w-5 h-5 text-green-500 dark:text-tertiary-900"
@@ -48,10 +48,10 @@ export function ApprovalStepperElement({
       )}
 
       {!done && (
-        <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-gray-900">
+        <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 text-white ring-white dark:ring-gray-900 dark:bg-gray-700">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-gray-500 dark:text-gray-400"
+            className="w-5 h-5 text-gray-300 dark:text-gray-400"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -68,28 +68,30 @@ export function ApprovalStepperElement({
 
       <div className="flex">
         <div className="flex flex-col">
-          <h3 className="ml-2 font-medium leading-tight">{name}</h3>
-          <p className="ml-2 text-sm">{lastInteraction}</p>
+          <h3 className="ml-2 font-medium leading-tight text-black">{name}</h3>
+          <p className="ml-2 text-sm text-black">{lastInteraction}</p>
         </div>
-        <button
-          type="button"
-          className={`flex ml-auto items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-tertiary-800 dark:text-gray-200 dark:border-gray-200 dark:hover:bg-tertiary-500 dark:hover:border-cream-500 dark:hover:text-cream-500 ${
-            done && "opacity-0"
-          }`}
-          onClick={() =>
-            onApprove({
-              profileId,
-              name,
-              lastInteraction,
-              imageSrc,
-              imageAlt,
-              done,
-              nftAddr,
-            })
-          }
-        >
-          Approve
-        </button>
+        <div className="grid place-items-center">
+          <button
+            type="button"
+            className={`flex ml-auto items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-lightGreen-500 bg-darkGreen-500 hover:text-darkGreen-500 border-darkGreen-500  border rounded-lg focus:outline-none hover:bg-lightGreen-500 focus:z-10 ${
+              done && "opacity-0"
+            }`}
+            onClick={() =>
+              onApprove({
+                profileId,
+                name,
+                lastInteraction,
+                imageSrc,
+                imageAlt,
+                done,
+                nftAddr,
+              })
+            }
+          >
+            Approve
+          </button>
+        </div>
       </div>
     </div>
   );

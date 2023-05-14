@@ -114,7 +114,7 @@ export function Purge() {
   }
 
   return (
-    <div className="relative overflow-hidden bg-white shadow-md dark:bg-tertiary-600 sm:rounded-lg">
+    <div className="relative overflow-hidden bg-white shadow-md dark:bg-mintGreen-500 sm:rounded-lg">
       <div className="flex flex-col p-4 space-y-3 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-4">
         <div
           className={`flex flex-col flex-shrink-0 space-y-3 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-3 ${
@@ -123,22 +123,32 @@ export function Purge() {
         >
           <button
             type="button"
-            className="flex items-center justify-center px-4 py-2 text-sm font-medium text-tertiary-900 rounded-lg bg-primary-500 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-500 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+            className="flex items-center justify-center px-4 py-2 text-sm font-medium text-darkGreen-500 hover:text-lightGreen-500 border-darkGreen-500 border rounded-lg bg-primary-500 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-lightGreen-500 dark:hover:bg-darkGreen-500 focus:outline-none dark:focus:ring-primary-800"
             onClick={() => purge(selectedItems)}
           >
-            <Image
+            {/* <div className="text-darkGreen-500 hover:text-lightGreen-500"> */}
+            <svg
+              fill="currentColor"
+              className="h-3.5 w-3.5 mr-2"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <path d="M10.375 2.25a4.125 4.125 0 100 8.25 4.125 4.125 0 000-8.25zM10.375 12a7.125 7.125 0 00-7.124 7.247.75.75 0 00.363.63 13.067 13.067 0 006.761 1.873c2.472 0 4.786-.684 6.76-1.873a.75.75 0 00.364-.63l.001-.12v-.002A7.125 7.125 0 0010.375 12zM16 9.75a.75.75 0 000 1.5h6a.75.75 0 000-1.5h-6z"></path>
+            </svg>
+            {/* </div> */}
+            {/* <Image
               src="user-minus.svg"
               className="h-3.5 w-3.5 mr-2"
               alt="User Minus"
               height={100}
               width={100}
-            />
-            Purge selected
+            /> */}
+            Unfollow selected
           </button>
         </div>
       </div>
       <div className="overflow-x-auto h-300 sm:h-400 scrollbar-hide">
-        {/* {purging && !purgeSuccess && ( */}
         {purging && !purgeSuccess && (
           <div className="p-4 h-full w-full grid place-items-center overflow-y-scroll">
             <ApprovalStepper
@@ -153,7 +163,6 @@ export function Purge() {
           //     />
           // </div>
         )}
-        {/* {!purging && !purgeSuccess && ( */}
         {!purging && !purgeSuccess && (
           <PurgeList
             listItems={listItems}
@@ -186,7 +195,7 @@ export function Purge() {
             setPurgeSuccess(false);
             selectedItems = [];
           }}
-          className={`flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-200 rounded-lg focus:outline-none hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-tertiary-800 dark:text-gray-200 dark:border-gray-200 dark:hover:bg-tertiary-500 dark:hover:border-cream-500 dark:hover:text-cream-500`}
+          className={`flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-200 rounded-lg focus:z-10 dark:bg-mintGreen-500 dark:text-darkGreen-500 dark:border-darkGreen-500`}
         >
           Cancel
         </button>
