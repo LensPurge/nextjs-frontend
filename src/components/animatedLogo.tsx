@@ -3,7 +3,7 @@ import { Group } from 'three';
 import React, { useRef, Ref } from 'react';
 import { useGLTF } from "@react-three/drei";
 import { OrbitControls } from '@react-three/drei';
-import { Canvas, useFrame, MeshProps, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, MeshProps, useThree, useLoader } from '@react-three/fiber';
 
 /* -------------------------------------------------------------------------- */
 /*                                 Components                                 */
@@ -33,7 +33,7 @@ function Logo(props: MeshProps) {
 	}); 
 
 	return (
-		<group dispose={null} ref={ref as Ref<Group>} position={[0, -1, 0]} scale={2}>
+		<group dispose={null} ref={ref as Ref<Group>} position={[0, -1, 0]} scale={window.innerWidth / 700}>
 			<mesh
 				{...props}
 				castShadow
@@ -59,8 +59,6 @@ function Logo(props: MeshProps) {
 }
 
 export default function LogoLanding() {
-	const ref = useRef()
-
 	return (
 		<div style={{width: '100vw', height: '100vh'}}>
 			<Canvas>
