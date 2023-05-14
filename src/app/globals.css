@@ -16,3 +16,7 @@
   }
 }
 
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: #f6f2f8;
+}
