@@ -1,6 +1,8 @@
+import Head from 'next/head';
 import './globals.css';
 import ToastComponent from './toastComponent';
 import ContextProvider from '@/components/web3Context';
+import LensAccountContextProvider from '@/components/lensAccountContext';
 
 export const metadata = {
   title: 'minimalens',
@@ -18,10 +20,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <ContextProvider>
-        <body>{children}</body>
-        <ToastComponent/>
-      </ContextProvider>
+      <head>
+        <link rel="stylesheet" href="https://lens.xyz/widget-styles.css" />
+      </head>
+      <LensAccountContextProvider>
+        <ContextProvider>
+          <body>
+            {children}
+            <ToastComponent/>
+          </body>
+        </ContextProvider>
+      </LensAccountContextProvider>
     </html>
   )
 }

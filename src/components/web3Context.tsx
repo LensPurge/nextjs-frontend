@@ -25,10 +25,10 @@ const providerOptions = {
 /* -------------------------------------------------------------------------- */
 
 type ContextType = {
-  account: any;
-  setAccount: React.Dispatch<React.SetStateAction<any>>;
+  provider: ethers.providers.Web3Provider | undefined;
+  setProvider: React.Dispatch<ethers.providers.Web3Provider | undefined>;
   disconnectAccount: () => void;
-  web3Modal: Web3Modal | undefined;
+  signedIn: boolean;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -41,7 +41,7 @@ interface Props {
   children: React.ReactNode;
 }
 const ContextProvider: NextPage<Props> = ({ children }) => {
-  const [account, setAccount] = useState<ethers.providers.JsonRpcSigner>();
+  const [provider, setProvider] = useState<ethers.providers.Web3Provider | undefined>(undefined);
 
   var web3Modal: Web3Modal | undefined = undefined;
   if (typeof window !== "undefined") {
@@ -54,11 +54,12 @@ const ContextProvider: NextPage<Props> = ({ children }) => {
   function disconnectAccount() {
     if (web3Modal == undefined) return;
     web3Modal.clearCachedProvider();
-    setAccount(undefined);
+    setProvider(undefined);
   }
 
+  const signedIn = provider != undefined;
   return (
-    <AccountContext.Provider value={{ account, setAccount, disconnectAccount, web3Modal }}>
+    <AccountContext.Provider value={{ provider, setProvider, disconnectAccount, signedIn }}>
       {children}
     </AccountContext.Provider>
   );

@@ -18,6 +18,7 @@ type ContextType = {
   account: any;
   setLensAccount: React.Dispatch<React.SetStateAction<ILensAccount | undefined>>;
   disconnectLens: () => void;
+  signedIn: boolean;
 };
 
 /* -------------------------------------------------------------------------- */
@@ -69,6 +70,8 @@ const LensAccountContextProvider: NextPage<Props> = ({ children }) => {
   }, [account]);
 
   function disconnectLens() {
+    setLensAccount(undefined);
+    console.log("signing out")
     if (typeof localStorage !== "undefined") {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
@@ -77,11 +80,11 @@ const LensAccountContextProvider: NextPage<Props> = ({ children }) => {
         type: "error"
       });
     }
-    setLensAccount(undefined);
   }
 
+  const signedIn = account != undefined;
   return (
-    <LensAccountAccountContext.Provider value={{ account, setLensAccount, disconnectLens }}>
+    <LensAccountAccountContext.Provider value={{ account, setLensAccount, disconnectLens, signedIn }}>
       {children}
     </LensAccountAccountContext.Provider>
   );
@@ -92,4 +95,4 @@ export default LensAccountContextProvider;
 /*                                    Hook                                    */
 /* -------------------------------------------------------------------------- */
 
-export const useLensAccounts = () => useContext(LensAccountAccountContext);
+export const useLensAccount = () => useContext(LensAccountAccountContext);
