@@ -16,7 +16,7 @@ type ApprovalItem = {
   profileId: string;
   name: string;
   lastInteraction: string;
-  imageSrc: string;
+  imageSrc: string | null;
   imageAlt: string;
   nftAddr: string;
   done: boolean;

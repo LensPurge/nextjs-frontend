@@ -14,7 +14,17 @@ export function Purge() {
   const { provider } = useAccounts();
 
   useEffect(() => {
-    fetchItems();
+    // fetchItems();
+    setListItems([
+      {
+        profileId: "0x1a",
+        name: "Fio",
+        lastInteraction: "01.04.2023",
+        imageSrc: null,
+        imageAlt: "Profile Pic",
+        nftAddr: "0x1a",
+      },
+    ]);
   }, []);
 
   function randomNumber() {
