@@ -14,17 +14,33 @@ export function Purge() {
   const { provider } = useAccounts();
 
   useEffect(() => {
-    fetchItems();
-    // setListItems([
-    //   {
-    //     profileId: "0x1a",
-    //     name: "Fio",
-    //     lastInteraction: "01.04.2023",
-    //     imageSrc: null,
-    //     imageAlt: "Profile Pic",
-    //     nftAddr: "0x1a",
-    //   },
-    // ]);
+    // fetchItems();
+    setListItems([
+      {
+        profileId: "0x1a",
+        name: "Fio",
+        lastInteraction: "01.04.2023",
+        imageSrc: null,
+        imageAlt: "Profile Pic",
+        nftAddr: "0x1a",
+      },
+      {
+        profileId: "0x1b",
+        name: "Alex",
+        lastInteraction: "01.04.2023",
+        imageSrc: null,
+        imageAlt: "Profile Pic",
+        nftAddr: "0x1a",
+      },
+      {
+        profileId: "0x1c",
+        name: "Dude",
+        lastInteraction: "01.04.2023",
+        imageSrc: null,
+        imageAlt: "Profile Pic",
+        nftAddr: "0x1a",
+      },
+    ]);
   }, []);
 
   function randomNumber() {
@@ -131,7 +147,7 @@ export function Purge() {
   }
 
   return (
-    <div className="relative overflow-hidden bg-white shadow-md dark:bg-mintGreen-500 sm:rounded-lg">
+    <div className="relative overflow-hidden shadow-md bg-mintGreen-500 sm:rounded-lg">
       <div className="flex flex-col p-4 space-y-3 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-4">
         <div
           className={`flex flex-col flex-shrink-0 space-y-3 sm:flex-row sm:items-center sm:justify-end sm:space-y-0 sm:space-x-3 ${
@@ -140,7 +156,7 @@ export function Purge() {
         >
           <button
             type="button"
-            className="flex items-center justify-center px-4 py-2 text-sm font-medium text-darkGreen-500 hover:text-lightGreen-500 border-darkGreen-500 border rounded-lg bg-primary-500 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-lightGreen-500 dark:hover:bg-darkGreen-500 focus:outline-none dark:focus:ring-primary-800"
+            className="flex items-center justify-center px-4 py-2 text-sm font-medium text-darkGreen-500 hover:text-lightGreen-500 border-darkGreen-500 border rounded-lg focus:ring-4 bg-lightGreen-500 hover:bg-darkGreen-500 focus:outline-none focus:ring-primary-800"
             onClick={() => purge(selectedItems)}
           >
             {/* <div className="text-darkGreen-500 hover:text-lightGreen-500"> */}
@@ -212,7 +228,7 @@ export function Purge() {
             setPurgeSuccess(false);
             selectedItems = [];
           }}
-          className={`flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium text-gray-200 bg-white border border-gray-200 rounded-lg focus:z-10 dark:bg-mintGreen-500 dark:text-darkGreen-500 dark:border-darkGreen-500`}
+          className={`flex items-center justify-center flex-shrink-0 px-3 py-2 text-sm font-medium rounded-lg focus:z-10 bg-mintGreen-500 text-darkGreen-500 border-darkGreen-500`}
         >
           Cancel
         </button>

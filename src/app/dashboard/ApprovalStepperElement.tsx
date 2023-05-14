@@ -28,12 +28,12 @@ export function ApprovalStepperElement({
   onApprove,
 }: ApprovalStepperElementProps) {
   return (
-    <div className="w-full">
+    <div>
       {done && (
-        <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 ring-white dark:ring-gray-900 dark:bg-lightGreen-500">
+        <span className="absolute flex items-center justify-center w-8 h-8 rounded-full -left-4 ring-4 ring-gray-900 bg-lightGreen-500">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-green-500 dark:text-tertiary-900"
+            className="w-5 h-5 text-tertiary-900"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -48,10 +48,10 @@ export function ApprovalStepperElement({
       )}
 
       {!done && (
-        <span className="absolute flex items-center justify-center w-8 h-8 bg-green-200 rounded-full -left-4 ring-4 text-white ring-white dark:ring-gray-900 dark:bg-gray-700">
+        <span className="absolute flex items-center justify-center w-8 h-8 rounded-full -left-4 ring-4 text-white  ring-gray-900 bg-gray-700">
           <svg
             aria-hidden="true"
-            className="w-5 h-5 text-gray-300 dark:text-gray-400"
+            className="w-5 h-5 text-gray-400"
             fill="currentColor"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,7 @@ export function ApprovalStepperElement({
         </span>
       )}
 
-      <div className="flex">
+      <div className="flex justify-between">
         <div className="flex flex-col">
           <h3 className="ml-2 font-medium leading-tight text-black">{name}</h3>
           <p className="ml-2 text-sm text-black">{lastInteraction}</p>

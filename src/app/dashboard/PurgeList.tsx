@@ -48,15 +48,15 @@ export function PurgeList({ listItems, onSelectionChange }: PurgeXProps) {
   }
 
   return (
-    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-darkGreen-500 dark:text-mintGreen-500 sticky top-0">
+    <table className="w-full text-sm text-left text-gray-400">
+      <thead className="text-xs uppercase bg-darkGreen-500 text-mintGreen-500 sticky top-0">
         <tr>
           <th scope="col" className="p-4">
             <div className="flex items-center">
               <input
                 id="checkbox-all"
                 type="checkbox"
-                className="w-3.5 h-3.5 cursor-pointer bg-gray-100 border-gray-300 rounded accent-lightGreen-500 dark:bg-gray-700 dark:border-gray-600"
+                className="w-3.5 h-3.5 cursor-pointer rounded accent-lightGreen-500 bg-gray-700 border-gray-600"
                 onChange={handleSelectAllChange}
                 checked={allChecked}
               />

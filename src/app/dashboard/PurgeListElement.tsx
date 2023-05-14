@@ -29,7 +29,7 @@ export function PurgeListElement({
   nftAddr,
 }: ListElementProps) {
   return (
-    <tr className="border-b dark:border-darkGreen-500">
+    <tr className="border-b border-darkGreen-500">
       <td className="w-4 px-4 py-3">
         <div className="flex items-center">
           <input
