@@ -1,7 +1,7 @@
 "use client";
 import { ProgressBar } from "./ProgressBar";
 import { PurgeList } from "./PurgeList";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { ListItem } from "./types";
 import Image from "next/image";
 import { PurgeSuccess } from "./PurgeSuccess";
@@ -13,25 +13,11 @@ import { useAccounts } from "@/components/web3Context";
 export function Purge() {
   const { provider } = useAccounts();
 
-  useEffect(() => {
-    fetchItems();
-    // setListItems([
-    //   {
-    //     profileId: "0x1a",
-    //     name: "Fio",
-    //     lastInteraction: "01.04.2023",
-    //     imageSrc: null,
-    //     imageAlt: "Profile Pic",
-    //     nftAddr: "0x1a",
-    //   },
-    // ]);
-  }, []);
-
   function randomNumber() {
     return Math.floor(Math.random() * 3) + 1;
   }
 
-  function convertItems(items: any): ListItem[] {
+  const convertItems = useCallback((items: any): ListItem[] => {
     let arry: ListItem[] = [];
     for (const [k, v] of Object.entries(items)) {
       let profileId = k;
@@ -54,9 +40,9 @@ export function Purge() {
       });
     }
     return arry;
-  }
+  }, []);
 
-  async function fetchItems() {
+  const fetchItems = useCallback(async () => {
     const address = await provider?.getSigner().getAddress();
     console.log("makeRequest");
     const response = await fetch(
@@ -76,7 +62,21 @@ export function Purge() {
     console.log(typeof items);
     const converted = convertItems(items);
     setListItems(converted);
-  }
+  }, [convertItems, provider]);
+
+  useEffect(() => {
+    fetchItems();
+    // setListItems([
+    //   {
+    //     profileId: "0x1a",
+    //     name: "Fio",
+    //     lastInteraction: "01.04.2023",
+    //     imageSrc: null,
+    //     imageAlt: "Profile Pic",
+    //     nftAddr: "0x1a",
+    //   },
+    // ]);
+  }, [fetchItems]);
 
   const [listItems, setListItems] = useState<ListItem[]>([]);
   // const listItems: ListItem[] = [
