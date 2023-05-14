@@ -1,3 +1,4 @@
+"use client";
 import { ProgressBar } from "./ProgressBar";
 import { PurgeList } from "./PurgeList";
 import { useState } from "react";

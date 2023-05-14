@@ -6,7 +6,7 @@ import { ethers, utils } from "ethers";
 import { getUnfollowTypedData } from "./api";
 
 import { apolloClient, unfollowUser } from "../api";
-// import { getClient } from "../client";
+import { getClient } from "../client";
 import { LENS_FOLLOW_NFT_ABI } from "../abi";
 import { omit } from "../helper";
 import { TypedDataDomain } from "@ethersproject/abstract-signer";
@@ -32,14 +32,15 @@ export function ApprovalStepper({ onAllApproved, items }: ApprovalStepperType) {
     items.map((item) => ({ ...item, done: false }))
   );
 
-  if (provider == undefined) return;
+//   if (provider == undefined) return;
   const account = provider?.getSigner();
+  console.log(provider);
   async function signedTypeData(
     domain: TypedDataDomain,
     types: Record<string, any>,
     value: Record<string, any>
   ) {
-    return account._signTypedData(
+    return account?._signTypedData(
       omit(domain, "__typename"),
       omit(types, "__typename"),
       omit(value, "__typename")
@@ -47,7 +48,8 @@ export function ApprovalStepper({ onAllApproved, items }: ApprovalStepperType) {
   }
 
   async function createUnfollowTypedData(profileId: string) {
-    const result = await apolloClient.mutate({
+    const newClient = await getClient();
+    const result = await newClient.mutate({
       mutation: getUnfollowTypedData,
       variables: {
         profile: profileId,
@@ -58,13 +60,13 @@ export function ApprovalStepper({ onAllApproved, items }: ApprovalStepperType) {
 
   async function unfollow() {
     // @note this also needs to be variable, bc this is the followed NFT address
-    const followNftAddress = "0x519B98aCFe0d13161aE75E6aEA8C4C60f6418055";
+    const followNftAddress = "0xAeadE1f5c402452023a78D518AaBA4bd0BeA6209";
     const followNftContract = new ethers.Contract(
       followNftAddress,
       LENS_FOLLOW_NFT_ABI,
       account
     );
-    let profileId = "0x15"; // @note this needs to be variable
+    let profileId = "0x3e77"; // @note this needs to be variable
     const result = await createUnfollowTypedData(profileId);
     const typedData = result.typedData;
     const signature = await signedTypeData(
@@ -72,7 +74,7 @@ export function ApprovalStepper({ onAllApproved, items }: ApprovalStepperType) {
       typedData.types,
       typedData.value
     );
-    const { v, r, s } = utils.splitSignature(signature);
+    const { v, r, s } = utils.splitSignature(signature!);
     const sig = {
       v,
       r,
@@ -84,20 +86,10 @@ export function ApprovalStepper({ onAllApproved, items }: ApprovalStepperType) {
       sig
     );
     console.log("follow: tx hash", tx.hash);
-    // const newClient = await getClient();
-    // await newClient
-    //   .mutate({
-    //     mutation: unfollowUser,
-    //     variables: {
-    //       profile: "0x15",
-    //     },
-    //   })
-    //   .then(() => console.log("successfully unfollowed"));
   }
 
   function handleItemApprove(newItem: ApprovalItem) {
     unfollow();
-
 
     setSelectedItems(
       itemsToApprove.map((item) => {

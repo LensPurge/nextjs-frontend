@@ -9,10 +9,10 @@ const httpLink = createHttpLink({
 	uri: APIURL, // replace with your API endpoint
 	fetch,
 });
-  
+
 const authLink = setContext(() => {
 	const token = localStorage.getItem('accessToken');
-	console.log("token", token);
+	console.log("token: ", token);
 	return {
 		headers: {
 		'x-access-token': token ? `Bearer ${token}` : '',
@@ -20,6 +20,7 @@ const authLink = setContext(() => {
 }
 });
 
+// @note i guess we do not fetch the token here
 export async function getClient() {
 
 	// create the client using the URL;
