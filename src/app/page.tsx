@@ -1,7 +1,7 @@
 "use client";
+import { Purge } from './dashboard/Purge';
 import LogoLanding from '../components/animatedLogo';
 import NavComponent from '@/components/navComponent';
-import { Purge } from './dashboard/Purge';
 import { useAccounts } from '@/components/web3Context';
 
 /* -------------------------------------------------------------------------- */
