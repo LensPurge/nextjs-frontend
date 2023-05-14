@@ -109,7 +109,7 @@ export function ApprovalStepper({ onAllApproved, items }: ApprovalStepperType) {
   }
 
   return (
-    <ol className="relative text-gray-500 border-l border-gray-200 dark:border-gray-700 dark:text-gray-400">
+    <ol className="relative text-gray-500">
       {itemsToApprove.map((item, index) => (
         <li
           className={`${index + 1 !== itemsToApprove.length && "mb-10"} ml-6 w-300`}
