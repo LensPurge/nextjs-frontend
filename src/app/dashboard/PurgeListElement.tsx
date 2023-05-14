@@ -29,7 +29,7 @@ export function PurgeListElement({
   nftAddr,
 }: ListElementProps) {
   return (
-    <tr className="border-b dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-tertiary-700">
+    <tr className="border-b dark:border-darkGreen-500">
       <td className="w-4 px-4 py-3">
         <div className="flex items-center">
           <input
@@ -37,7 +37,7 @@ export function PurgeListElement({
             type="checkbox"
             onChange={() => onSelect({ name, lastInteraction, profileId, imageSrc, imageAlt, nftAddr })}
             checked={isSelected}
-            className="w-3.5 h-3.5 bg-gray-100 cursor-pointer border-gray-300 rounded accent-primary-500 dark:bg-gray-700 dark:border-gray-600"
+            className="w-3.5 h-3.5 bg-gray-100 cursor-pointer border-darkGreen-500 rounded accent-lightGreen-500"
           />
           <label
             htmlFor={`checkbox-table-search-${profileId}`}
@@ -49,18 +49,18 @@ export function PurgeListElement({
       </td>
       <th
         scope="row"
-        className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+        className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap"
       >
         <Image
           src={imageSrc}
           alt={imageAlt}
-          className="w-auto h-8 mr-3 text-cream-500"
+          className="w-auto h-8 mr-3 text-darkGreen-500"
           width={100}
           height={100}
         />
         {name}
       </th>
-      <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-cream-500 text-right">
+      <td className="px-4 py-2 font-medium text-darkGreen-500 whitespace-nowrap text-right">
         {lastInteraction}
       </td>
     </tr>
